@@ -1,0 +1,40 @@
+SELECT DISTINCT COUNT(*) AS count_of_records
+FROM olist_geolocation_dataset;
+
+SELECT DISTINCT COUNT(*) AS counts
+FROM olist_order_items_dataset;
+
+SELECT *
+FROM employees;
+
+SELECT *
+FROM department
+;
+
+SELECT *
+FROM department
+WHERE location = "Lagos"
+;
+
+SELECT emp_name AS full_name, emp_id, department AS dept, emp_salary
+FROM employees
+INNER JOIN department
+ON employees.emp_id = department.employee_id
+GROUP BY full_name, emp_salary, dept, emp_id
+;
+
+SELECT *
+FROM emp_location
+;
+
+SELECT *
+FROM payroll
+;
+
+
+SELECT emp_name AS full_name, emp_id, department AS dept, emp_salary
+FROM employees
+INNER JOIN department
+ON employees.emp_id = department.employee_id
+GROUP BY full_name, emp_salary, dept, emp_id
+;
