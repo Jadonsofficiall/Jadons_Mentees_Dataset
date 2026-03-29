@@ -1,0 +1,198 @@
+-- Add tables to the hr database [DDL AND DML]
+
+CREATE TABLE Employees (
+	emp_id INT PRIMARY KEY,
+    emp_name VARCHAR(50) NOT NULL,
+    emp_dept VARCHAR(50) NOT NULL,
+    emp_role VARCHAR(50) NOT NULL,
+    emp_salary DECIMAL(10, 2) NOT NULL,
+    emp_dob INT NOT NULL
+);
+
+-- Modifying the table
+ALTER TABLE employees
+MODIFY emp_dob VARCHAR(50) NOT NULL;
+
+-- Dropping a column
+ALTER TABLE employees
+DROP COLUMN emp_role;
+
+-- Adding a column
+ALTER TABLE employees
+ADD COLUMN emp_role VARCHAR(50) NOT NULL;
+
+-- Renaming a column
+ALTER TABLE employees
+RENAME COLUMN emp_dob TO emp_date_of_birth;
+
+-- Truncate (deleting) all rows
+TRUNCATE TABLE employees;
+
+CREATE TABLE department (
+	dept_id INT PRIMARY KEY,
+    category VARCHAR(50) NOT NULL,
+    segment VARCHAR(50) NOT NULL,
+    location VARCHAR(50) NOT NULL,
+    employee_id INT NOT NULL,
+    FOREIGN KEY (employee_id) REFERENCES employees(emp_id)
+    );
+
+SELECT emp_id, emp_date_of_birth
+FROM employees;
+
+-- Creating additional tables
+
+CREATE TABLE payroll (
+	emp_id INT PRIMARY KEY,
+    dept VARCHAR(50) NOT NULL,
+    salary DECIMAL(10, 2) NOT NULL,
+    bonus DECIMAL(10, 2) NOT NULL,
+    paycheck_id INT NOT NULL,
+    FOREIGN KEY (emp_id) REFERENCES employees(emp_id)
+    );
+
+-- Altering column to a desire FK
+
+ALTER TABLE emp_location
+ADD CONSTRAINT fk_constraint_name
+FOREIGN KEY (employee_id)
+REFERENCES employees(emp_id)
+;
+
+ALTER TABLE department
+ADD COLUMN department VARCHAR(50) NOT NULL;
+
+-- Inserting records into the table fields
+
+INSERT INTO employees (emp_id, emp_name, emp_dept, emp_salary, emp_date_of_birth, emp_role)
+VALUES
+	(1001, 'John Doe', 'Sales', 500000, '1993-08-12', 'Sales Manager'),
+    (1002, 'Franklin Kings', 'Media', 650000, '1995-07-20', 'Media Manager'),
+    (1003, 'Wisdom Chase', 'Marketing', 650000, '1998-08-04', 'Marketing Manager'),
+    (1004, 'Stella Davis', 'Human Resources', 450000, '1999-03-28', 'HR Manager'),
+    (1005, 'Oge Declan', 'Administrative', 700000, '1992-07-21', 'Lead Admin')
+;
+
+INSERT INTO department (dept_id, category, segment, location, employee_id, department)
+VALUES
+	(001, 'Marketing', 'Top level', 'Abuja', 1001, 'Sales'),
+    (002, 'Marketing', 'Top level', 'Lagos', 1002, 'Media'),
+    (003, 'Marketing', 'Top level', 'Owerri', 1003, 'Marketing'),
+    (004, 'HR/Admin', 'Top level', 'Ondo', 1004, 'Human Resources'),
+    (005, 'Management', 'Top level', 'Lagos', 1005, 'Administrative')
+;
+
+ALTER TABLE employees
+DROP COLUMN emp_dept;
+
+INSERT INTO emp_location (location_id, location_point, employee_id)
+VALUES
+	(10001, 'Wuse Zone 1', 1001),
+    (10002, 'Victoria Island', 1002),
+    (10003, 'Worldbank', 1003),
+    (10004, 'Akure South', 1004),
+    (10005, 'Lekki', 1005)
+;
+
+-- Djusting Foreign key
+
+ALTER TABLE emp_location
+DROP FOREIGN KEY fk_constraint_name
+;
+
+ALTER TABLE emp_location
+MODIFY employee_id INT NOT NULL
+; 
+
+-- Inserting the payroll records
+
+INSERT INTO payroll (emp_id, dept, salary, bonus, paycheck_id)
+VALUES
+	(1001, 'Sales', 500000, 100000, 2001),
+    (1002, 'Media', 650000, 99000, 2002),
+    (1003, 'Marketing', 650000, 120000, 2003),
+    (1004, 'Human Resources', 450000, 120000, 2004),
+    (1005, 'Administrative', 700000, 55000, 2005)
+;
+
+-- To adjust the records, first drop the table and re-run the already existing records
+
+DROP TABLE payroll
+
+
+
+INSERT INTO employees (emp_id, emp_name, emp_salary, emp_date_of_birth, emp_role)
+VALUES
+	(1006, 'Olivia Simeons', 350000, '1998-06-12', 'Team Lead'),
+    (1007, 'Caleb Reigns', 370000, '1994-05-25', 'Team Lead'),
+    (1008, 'Chelsea Achim', 320000, '1999-09-12', 'Team Lead'),
+    (1009, 'Benard Silva', 380000, '1997-10-17', 'Team Lead'),
+    (1010, 'Clove Peters', 350000, '1998-07-15', 'Team Lead'),
+    (1011, 'Chris Daniels', 320000, '2000-02-03', 'Sales Dev Rep'),
+    (1012, 'Ibrahim Sodiq', 330000, '2001-01-20', 'Media planner'),
+    (1013, 'Aisha Isha', 300000, '1999-03-28', 'Content Manager'),
+    (1014, 'Ugo Chilaka', 280000, '2002-05-12', 'Talent Acquisition Specialist'),
+    (1015, 'Linda Benson', 300000, '1997-08-29', 'Executive Assistant'),
+    (1016, 'Chioma Ibeh', 250000, '2003-07-26', 'Business Dev Rep'),
+    (1017, 'Charis Immaculate', 235000, '2001-12-05', 'Intern'),
+    (1018, 'Edna Elvis', 235000, '2002-01-15', 'Intern'),
+    (1019, 'Liberty Kim', 235000, '2000-05-12', 'Intern'),
+    (1020, 'Stephanie King', 235000, '1999-09-10', 'Intern')
+    ;
+    
+INSERT INTO department (dept_id, category, segment, location, employee_id, department)
+VALUES
+	(006, 'Marketing', 'Second level', 'Abuja', 1006, 'Sales'),
+    (007, 'Marketing', 'Second level', 'Lagos', 1007, 'Media'),
+    (008, 'Marketing', 'Second level', 'Owerri', 1008, 'Marketing'),
+    (009, 'HR/Admin', 'Second level', 'Ondo', 1009, 'Human Resources'),
+    (010, 'Management', 'Second level', 'Lagos', 1010, 'Administrative'),
+    (011, 'Marketing', 'Representative', 'Lagos', 1011, 'Sales'),
+    (012, 'Marketing', 'Planner', 'Abuja', 1012, 'Media'),
+    (013, 'Marketing', 'Content', 'Abuja', 1013, 'Marketing'),
+    (014, 'HR/Admin', 'Specialist', 'Ondo', 1014, 'Human Resources'),
+    (015, 'Management', 'Assistant', 'Ondo', 1015, 'Administrative'),
+    (016, 'Marketing', 'Representative', 'Owerri', 1016, 'Sales'),
+    (017, 'Marketing', 'Intern', 'Owerri', 1017, 'Media'),
+    (018, 'Marketing', 'Intern', 'Lagos', 1018, 'Marketing'),
+    (019, 'HR/Admin', 'Intern', 'Abuja', 1019, 'Human Resources'),
+    (020, 'Management', 'Intern', 'Ondo', 1020, 'Administrative')
+;
+
+INSERT INTO emp_location (location_id, location_point, employee_id)
+VALUES
+	(10006, 'Wuse Zone 1', 1006),
+    (10007, 'Victoria Island', 1007),
+    (10008, 'Worldbank', 1008),
+    (10009, 'Akure South', 1009),
+    (10010, 'Lekki', 1010),
+	(10011, 'Wuse Zone 1', 1011),
+    (10012, 'Victoria Island', 1012),
+    (10013, 'Worldbank', 1013),
+    (10014, 'Akure South', 1014),
+    (10015, 'Lekki', 1015),
+    (10016, 'Wuse Zone 1', 1016),
+    (10017, 'Victoria Island', 1017),
+    (10018, 'Worldbank', 1018),
+    (10019, 'Akure South', 1019),
+    (10020, 'Lekki', 1020)
+    ;
+    
+    INSERT INTO payroll (emp_id, dept, salary, bonus, paycheck_id)
+VALUES
+	(1006, 'Sales', 350000, 90000, 2006),
+    (1007, 'Media', 370000, 85000, 2007),
+    (1008, 'Marketing', 320000, 78000, 2008),
+    (1009, 'Human Resources', 380000, 78000, 2009),
+    (1010, 'Administrative', 350000, 50000, 2010),
+    (1011, 'Sales', 320000, 55000, 2011),
+    (1012, 'Media', 330000, 70000, 2012),
+    (1013, 'Marketing', 300000, 65000, 2013),
+    (1014, 'Human Resources', 280000, 78000, 2014),
+    (1015, 'Administrative', 300000, 55000, 2015),
+    (1016, 'Sales', 250000, 50000, 2016),
+    (1017, 'Media', 235000, 30000, 2017),
+    (1018, 'Marketing', 235000, 25000, 2018),
+    (1019, 'Human Resources', 235000, 25000, 2019),
+    (1020, 'Administrative', 235000, 30000, 2020)
+    ;
